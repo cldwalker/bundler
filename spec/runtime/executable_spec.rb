@@ -107,4 +107,15 @@ describe "Running bin/* commands" do
 
     bundled_app("bin/rackup").should exist
   end
+
+  it "works with a remote source" do
+    gemfile <<-G
+      source "http://localgemserver.test"
+      gem "rack"
+    G
+
+    bundle "install --binstubs", :artifice => 'endpoint'
+
+    bundled_app("bin/rackup").should exist
+  end
 end
